@@ -206,12 +206,26 @@ async function fetchForecast(forecast) {
 
 
 
-//step 1
+
 // get the forecast data using another fetch req -- completed but check
-// create variables needed such as cityName, Temperatures, wind etc.
+
+// create variables needed such as cityName, temperatures, wind etc.
+
+let cityName, temperatures, wind;
+
 // assign the data from the json response to the variables
+
+cityName = weatherSearch.chosenCity;
+temperatures = weatherSearch.list;
+wind = weatherSearch.list;
+
 //console.log that you are getting the data
+
+console.log("Getting data for city: " + cityName);
+console.log("Temperature: " + temperatures + "K");
+console.log("Wind Speed: " + wind + "m/s");
+
 // start appending the data onto the html
 
-//step 2
+
 // start with styling 
