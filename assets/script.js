@@ -182,8 +182,8 @@ async function fetchCurrent(current) {
     if (response.status === 200) {
         let data = await response.json();
 
-        console.log(data)
-
+        console.log("this is current weather data", data)
+        console.log(data[0].WeatherText)
     }
 }
 
@@ -194,36 +194,41 @@ async function fetchForecast(forecast) {
     
     console.log(response.status); // 200
     console.log(response.statusText); // OK
+
     
     
     if (response.status === 200) {
         let data = await response.json();
 
         console.log(data)
-
+        console.log(data.DailyForecasts[0].Date)
+        let date = data.DailyForecasts[0].Date
     }
 }
 
+// assign the data from the API response to the variables
+cityName = weatherSearch.chosenCity;
+temperatures = weatherSearch.temperatures;
+wind = weatherSearch.wind;
+
+// log the data to the console
+console.log("City Name: " + cityName);
+console.log("Temperatures: " + temperatures);
+console.log("Wind: " + wind);
 
 
 
 // get the forecast data using another fetch req -- completed but check
 
-// create variables needed such as cityName, temperatures, wind etc.
+// create variables needed such as cityName, temperatures, wind
 
-let cityName, temperatures, wind;
+// let cityName, temperatures, wind;
 
 // assign the data from the json response to the variables
 
-cityName = weatherSearch.chosenCity;
-temperatures = weatherSearch.list;
-wind = weatherSearch.list;
 
 //console.log that you are getting the data
 
-console.log("Getting data for city: " + cityName);
-console.log("Temperature: " + temperatures + "K");
-console.log("Wind Speed: " + wind + "m/s");
 
 // start appending the data onto the html
 
