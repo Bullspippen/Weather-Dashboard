@@ -137,8 +137,8 @@ let exampleResponse = [
     }
 ]
 
-let api_key = "yoW7BrAbE8SKkAaZNkhu6Cd7oAhttmid";
-
+// let api_key = "yoW7BrAbE8SKkAaZNkhu6Cd7oAhttmid";
+const apiKey = '431dd6371869dd989989366774b6e8c7';
 let city;
 
 
@@ -147,13 +147,18 @@ let city;
 function weatherSearch() {
     city = document.getElementById('chosenCity').value;
 
-    let locationKeySearch = `http://dataservice.accuweather.com/locations/v1/cities/CA/search?q=${city}&apikey=${api_key}`
+    // let locationKeySearch = `http://dataservice.accuweather.com/locations/v1/cities/CA/search?q=${city}&apikey=${api_key}`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+    fetch(url)
+  .then((response) => response.json())
+  .then((data) => fetchCurrent(data));
 
-    fetchKey(locationKeySearch);
+
+    // fetchKey(locationKeySearch);
    
 
 }
-
+document.getElementById("searchbtn").addEventListener('click', weatherSearch)
 async function fetchKey(location) {
     let response = await fetch(location);
     
@@ -173,18 +178,31 @@ async function fetchKey(location) {
 
 async function fetchCurrent(current) {
     console.log(current)
-    let response = await fetch(current);
+    // let response = await fetch(current);
     
-    console.log(response.status); // 200
-    console.log(response.statusText); // OK
+    // console.log(response.status); // 200
+    // console.log(response.statusText); // OK
     
     
-    if (response.status === 200) {
-        let data = await response.json();
+    // if (response.status === 200) {
+        // let data = await response.json();
+        let cardTitle = document.createElement('div');
+        cardTitle.classList.add('card-title');
+        cardTitle.innerHTML = current.name
 
+        let cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+        // cardBody.innerHTML = `<p>${data.TimeZone.NextOffsetChange}</p><p>${data.temperatures}</p?>`
+
+        document.getElementById('current-weather').append(cardTitle).append(cardBody)
+        // <h5 class="card-title">Card title</h5>
+        // <img></img>
+        // <p class="card-text">Text: text</p>
+        // <p class="card-text">Text: text</p>
+        // <p class="card-text">Text: text</p>
         console.log("this is current weather data", data)
         console.log(data[0].WeatherText)
-    }
+    // }
 }
 
 
