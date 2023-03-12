@@ -1,94 +1,93 @@
-let apiKeyAccuWeather = "yoW7BrAbE8SKkAaZNkhu6Cd7oAhttmid";
+// Weather API keys
 const apiKeyOpenWeather = "431dd6371869dd989989366774b6e8c7";
+const apiKeyAccuWeather = "yoW7BrAbE8SKkAaZNkhu6Cd7oAhttmid";
 
 // DOM Elements to be used
-const cityInputEl = document.getElementById("city-input");
-const searchBtnEl = document.getElementById("search-btn");
-const searchHistoryEl = document.getElementById("search-history");
+const cityInputEl = document.getElementById("chosenCity");
+const searchBtnEl = document.getElementById("search-button");
+const searchHistoryEl = document.querySelector(".history");
 const currentWeatherEl = document.getElementById("current-weather");
-const forecastWeatherEl = document.getElementById("forecast-weather");
+const forecastWeatherEl = document.getElementById("forecast");
 
 // Event listeners
 searchBtnEl.addEventListener("click", handleSearch);
+searchHistoryEl.addEventListener("click", handleHistoryClick);
 
 // Search history
 let searchHistory = [];
 
-// Display current weather
-const displayCurrentWeather = (weather) => {
-  // Create card
-  const card = document.createElement("div");
-  card.classList.add("card", "bg-primary", "text-white");
-
-  // Create card body
-  const cardBody = document.createElement("div");
-  cardBody.classList.add("card-body");
-
-  // Create card title
-  const cardTitle = document.createElement("h2");
-  cardTitle.classList.add("card-title");
-  cardTitle.textContent = `${weather.city}, ${weather.country}`;
-
-  // Create weather icon
-  const icon = document.createElement("img");
-  icon.setAttribute(
-    "src",
-    `https://openweathermap.org/img/wn/${weather.icon}.png`
-  );
-  icon.setAttribute("alt", weather.description);
-
-
-
-const weatherSearch = () => {
-  const city = document.getElementById("chosenCity").value.trim();
-
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKeyOpenWeather}`;
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("data line 152", data);
-      fetchKey(data);
-    });
-};
-
-const fetchKey = async (location) => {
-  const response = await fetch(
-    `https://dataservice.accuweather.com/locations/v1/cities/search?q=${location.name}&apikey=${apiKeyAccuWeather}`
-  );
-
-  if (response.status === 200) {
-    const data = await response.json();
-    const key = data[0].Key;
-
-    const currentConditionSearch = `https://dataservice.accuweather.com/currentconditions/v1/${key}?&apikey=${apiKeyAccuWeather}`;
-    const forecastConditionSearch = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?&apikey=${apiKeyAccuWeather}`;
-
-    fetchCurrent(currentConditionSearch);
-    fetchForecast(forecastConditionSearch);
+// Handle search
+function handleSearch(event) {
+  event.preventDefault();
+  const searchTerm = cityInputEl.value.trim();
+  if (searchTerm) {
+    getWeather(searchTerm);
+    cityInputEl.value = "";
   }
-};
+}
 
-const fetchCurrent = async (currentUrl) => {
-  const response = await fetch(currentUrl);
-  const data = await response.json();
-
-  const cardTitle = document.createElement("div");
-  cardTitle.classList.add("card-title");
-  cardTitle.innerHTML = data[0].LocalObservationDateTime;
-
-  const cardBody = document.createElement("div");
-  cardBody.classList.add("card-body");
-  cardBody.innerHTML = `<p>Temperature: ${data[0].Temperature.Imperial.Value} &#8457;</p><p>Weather Text: ${data[0].WeatherText}</p>`;
-
-  document.getElementById("current-weather").append(cardTitle, cardBody);
-};
-
-const fetchForecast = async (forecastUrl) => {
-  const response = await fetch(forecastUrl);
-
-  if (response.status === 200) {
-    const data = await response.json();
-    console.log(data);
-    console.log(data.DailyForecasts[0].Date);
+// Handle search history click
+function handleHistoryClick(event) {
+  event.preventDefault();
+  const searchTerm = event.target.getAttribute("data-search-term");
+  if (searchTerm) {
+    getWeather(searchTerm);
   }
-};
+}
+
+// Get weather
+async function getWeather(city) {
+  // Build URLs for OpenWeather API and AccuWeather API
+  const openWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKeyOpenWeather}`;
+  const accuWeatherURL = `https://dataservice.accuweather.com/locations/v1/cities/search?q=${city}&apikey=${apiKeyAccuWeather}`;
+
+  try {
+    // Get location key from AccuWeather API
+    const accuWeatherResponse = await fetch(accuWeatherURL);
+    const accuWeatherData = await accuWeatherResponse.json();
+    const locationKey = accuWeatherData[0].Key;
+
+    // Get weather data from OpenWeather API
+    const openWeatherResponse = await fetch(openWeatherURL);
+    const openWeatherData = await openWeatherResponse.json();
+
+    // Create weather object
+    const weather = {
+      city: openWeatherData.name,
+      country: openWeatherData.sys.country,
+      temperature: Math.round(openWeatherData.main.temp),
+      humidity: openWeatherData.main.humidity,
+      windSpeed: Math.round(openWeatherData.wind.speed),
+      description: openWeatherData.weather[0].description,
+      icon: openWeatherData.weather[0].icon,
+    };
+
+    // Display current weather and forecast
+    displayCurrentWeather(weather);
+    getForecast(locationKey);
+
+    // Add search term to history
+    addToHistory(city);
+  } catch (error) {
+    console.error(error);
+    alert("Unable to get weather. Please try again.");
+  }
+}
+
+// Get forecast
+async function getForecast(locationKey) {
+  // Build URL for AccuWeather API
+  const accuWeatherURL = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKeyAccuWeather}&metric=true`;
+
+  try {
+    // Get forecast data from AccuWeather API
+    const accuWeatherResponse = await fetch(accuWeatherURL);
+    const accuWeatherData = await accuWeatherResponse.json();
+    const forecast = [];
+
+    // Extract forecast data for the next 5 days
+    for (let i = 1; i <= 5; i++) {
+      const dailyForecast = accuWeatherData.DailyForecasts[i];
+      const forecastItem = {
+        date: dailyForecast.Date,
+        minTemp: dailyForecast.Temperature.Minimum.Value
