@@ -1,6 +1,23 @@
 let apiKeyAccuWeather = "yoW7BrAbE8SKkAaZNkhu6Cd7oAhttmid";
 const apiKeyOpenWeather = "431dd6371869dd989989366774b6e8c7";
 
+// DOM Elements to be used
+const cityInputEl = document.getElementById("city-input");
+const searchBtnEl = document.getElementById("search-btn");
+const searchHistoryEl = document.getElementById("search-history");
+const currentWeatherEl = document.getElementById("current-weather");
+const forecastWeatherEl = document.getElementById("forecast-weather");
+
+// Event listeners
+searchBtnEl.addEventListener("click", handleSearch);
+
+// Search history
+let searchHistory = [];
+
+// ***Create Functions*** //
+
+
+
 const weatherSearch = () => {
   const city = document.getElementById("chosenCity").value.trim();
 
