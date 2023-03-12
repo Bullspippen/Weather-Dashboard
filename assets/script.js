@@ -14,7 +14,28 @@ searchBtnEl.addEventListener("click", handleSearch);
 // Search history
 let searchHistory = [];
 
-// ***Create Functions*** //
+// Display current weather
+const displayCurrentWeather = (weather) => {
+  // Create card
+  const card = document.createElement("div");
+  card.classList.add("card", "bg-primary", "text-white");
+
+  // Create card body
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+
+  // Create card title
+  const cardTitle = document.createElement("h2");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = `${weather.city}, ${weather.country}`;
+
+  // Create weather icon
+  const icon = document.createElement("img");
+  icon.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${weather.icon}.png`
+  );
+  icon.setAttribute("alt", weather.description);
 
 
 

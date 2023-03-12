@@ -1,0 +1,166 @@
+/* Style for search box */
+.input-group {
+  width: 100%;
+}
+
+/* Style for search button */
+#search-button {
+  margin-left: 10px;
+}
+
+/* Style for city history list */
+.history {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Style for current weather */
+#today {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Style for weather icons */
+.wicon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Style for forecast cards */
+.forecast-card {
+  display: inline-block;
+  width: 200px;
+  margin-right: 10px;
+}
+
+/* Style for forecast card headers */
+.forecast-header {
+  font-weight: bold;
+}
+
+/* Style for temperature and humidity text */
+.temp-humid {
+  font-size: 14px;
+}
+
+/* Style for wind speed text */
+.wind-speed {
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Style for UV index badge */
+.uv-badge {
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+/* Style for UV index badge colors based on severity */
+.uv-low {
+  background-color: green;
+}
+
+.uv-moderate {
+  background-color: yellow;
+}
+
+.uv-high {
+  background-color: orange;
+}
+
+.uv-very-high {
+  background-color: red;
+}
+
+.uv-extreme {
+  background-color: purple;
+}
+
+/* General styles */
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  background-color: #F0F8FF;
+}
+
+.border-right {
+  border-right: 1px solid #D3D3D3;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+/* !important is used to override Bootstrap styles */
+.mt-3 {
+  margin-top: 1rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.ml-2 {
+  margin-left: 0.5rem !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.col-lg-8 {
+  max-width: 800px !important;
+}
+
+.border-top {
+  border-top: 1px solid #D3D3D3;
+}
+
+.btn-outline-secondary {
+  border-color: #D3D3D3 !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #D3D3D3 !important;
+  color: #FFFFFF !important;
+}
+
+/* Media queries */
+/* !important is used to override Bootstrap styles */
+@media screen and (max-width: 767px) {
+  .col-lg-3 {
+    max-width: 100% !important;
+  }
+
+  .col-lg-8 {
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .col-lg-3 {
+    max-width: 50% !important;
+  }
+
+  .col-lg-8 {
+    max-width: 50% !important;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .col-lg-3 {
+    max-width: 25% !important;
+  }
+
+  .col-lg-8 {
+    max-width: 75% !important;
+  }
+}
