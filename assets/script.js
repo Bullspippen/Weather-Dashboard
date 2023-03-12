@@ -1,6 +1,5 @@
 // Weather API keys
 const apiKeyOpenWeather = "431dd6371869dd989989366774b6e8c7";
-const apiKeyAccuWeather = "yoW7BrAbE8SKkAaZNkhu6Cd7oAhttmid";
 
 // DOM Elements to be used
 const cityInputEl = document.getElementById("chosenCity");
@@ -37,16 +36,10 @@ function handleHistoryClick(event) {
 
 // Get weather
 async function getWeather(city) {
-  // Build URLs for OpenWeather API and AccuWeather API
+  // Build URL for OpenWeather API
   const openWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKeyOpenWeather}`;
-  const accuWeatherURL = `https://dataservice.accuweather.com/locations/v1/cities/search?q=${city}&apikey=${apiKeyAccuWeather}`;
 
   try {
-    // Get location key from AccuWeather API
-    const accuWeatherResponse = await fetch(accuWeatherURL);
-    const accuWeatherData = await accuWeatherResponse.json();
-    const locationKey = accuWeatherData[0].Key;
-
     // Get weather data from OpenWeather API
     const openWeatherResponse = await fetch(openWeatherURL);
     const openWeatherData = await openWeatherResponse.json();
@@ -64,7 +57,6 @@ async function getWeather(city) {
 
     // Display current weather and forecast
     displayCurrentWeather(weather);
-    getForecast(locationKey);
 
     // Add search term to history
     addToHistory(city);
@@ -74,20 +66,33 @@ async function getWeather(city) {
   }
 }
 
-// Get forecast
-async function getForecast(locationKey) {
-  // Build URL for AccuWeather API
-  const accuWeatherURL = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKeyAccuWeather}&metric=true`;
+// Display current weather
+function displayCurrentWeather(weather) {
+  // Create HTML elements for current weather
+  const html = `
+    <h2>${weather.city}, ${weather.country}</h2>
+    <p><strong>Temperature:</strong> ${weather.temperature}&deg;F</p>
+    <p><strong>Humidity:</strong> ${weather.humidity}%</p>
+    <p><strong>Wind Speed:</strong> ${weather.windSpeed} mph</p>
+    <p><strong>Description:</strong> ${weather.description}</p>
+    <img src="http://openweathermap.org/img/w/${weather.icon}.png" alt="${weather.description}">
+  `;
+  currentWeatherEl.innerHTML = html;
+}
 
-  try {
-    // Get forecast data from AccuWeather API
-    const accuWeatherResponse = await fetch(accuWeatherURL);
-    const accuWeatherData = await accuWeatherResponse.json();
-    const forecast = [];
+// Add search term to history
+function addToHistory(searchTerm) {
+  // Add search term to array
+  searchHistory.unshift(searchTerm);
 
-    // Extract forecast data for the next 5 days
-    for (let i = 1; i <= 5; i++) {
-      const dailyForecast = accuWeatherData.DailyForecasts[i];
-      const forecastItem = {
-        date: dailyForecast.Date,
-        minTemp: dailyForecast.Temperature.Minimum.Value
+  // Limit search history to 5 items
+  if (searchHistory.length > 5) {
+    searchHistory.pop();
+  }
+
+  // Create HTML elements for search history
+  const html = searchHistory
+    .map((item) => `<li><a href="#" data-search-term="${item}">${item}</a></li>`)
+    .join("");
+  searchHistoryEl.innerHTML = html;
+}
