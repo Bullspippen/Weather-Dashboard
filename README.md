@@ -19,4 +19,4 @@ WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 
 
-Link to Deployed Application: [Weather Dashboard](file:///Users/mohamedosman/bootcamp/Module-6---Weather-Dashboard/Module-6---Weather-Dashboard/index.html)
+Link to Deployed Application: [Weather Dashboard](https://bullspippen.github.io/Weather-Dashboard/)
