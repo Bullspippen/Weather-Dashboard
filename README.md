@@ -1,4 +1,4 @@
-# Module-6---Weather-Dashboard
+# Weather-Dashboard
 
 User Story
 
