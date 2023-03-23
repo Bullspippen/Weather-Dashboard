@@ -1,22 +1,41 @@
-# Weather-Dashboard
+# Weather Dashboard Application
 
-User Story
+This is a weather dashboard application that allows users to search for the current and future weather conditions of a particular city. The application retrieves data from the OpenWeather API and displays the weather information for the searched city. It also allows users to view the weather data for previously searched cities.
 
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
+## Table of Contents
 
-Acceptance Criteria
+- [Tools Used](#tools-used)
+- [Application Features](#application-features)
+- [Installation and Usage](#installation-and-usage)
+- [Credits](#credits)
+- [Deployed Application](#deployed-application)
 
-GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
+## Tools Used
 
+This application was built using HTML, CSS, JavaScript, and the OpenWeather API.
 
-Link to Deployed Application: [Weather Dashboard](https://bullspippen.github.io/Weather-Dashboard/)
+## Application Features
+
+- Allows users to search for the current and future weather conditions of a particular city
+- Displays the city name, date, an icon representation of weather conditions, temperature, humidity, and wind speed for current weather conditions
+- Displays the date, an icon representation of weather conditions, temperature, humidity, and wind speed for future weather conditions for the next five days
+- Stores the search history of the cities for easy access
+
+## Installation and Usage
+
+To use this application, follow these steps:
+
+1. Clone the repository to your local machine
+2. Open the `index.html` file in your preferred web browser
+3. In the search bar, enter the name of the city you want to search for
+4. Click the search button
+5. The current and future weather conditions for the city will be displayed
+6. To view the weather data for previously searched cities, click on the city name in the search history
+
+## Credits
+
+- Created by **Mohamed Osman**
+
+## Deployed Application
+
+- Link to Deployed Application: [Weather Dashboard](https://bullspippen.github.io/Weather-Dashboard/)
